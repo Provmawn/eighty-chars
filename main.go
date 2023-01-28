@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -32,14 +33,23 @@ func Format(contents string, characterLimit int) string {
    return strings.Join(lines, "\n")
 }
 
+func WriteContents(path, contents string) {
+    err := os.WriteFile(path, []byte(contents), 0664)
+    if err != nil {
+        fmt.Println(err)
+    }
+}
+
 func main() {
     file := flag.String("file", "", "file that we will run formatting on")
-    output := flag.String("output", *file, "name of file to output formatted content")
+    output := flag.String("output", "", "name of file to output formatted content")
     charLimit := flag.Int("char-limit", 80, "lengths limit of each line")
     flag.Parse()
     contents := ReadFileContents(*file)
     contents = Format(contents, *charLimit)
-    if *output != "" {
-        os.WriteFile(*output, []byte(contents), 0664)
+    if *output == "" {
+        WriteContents(*file, contents)
+    } else {
+        WriteContents(*output, contents)
     }
 }
