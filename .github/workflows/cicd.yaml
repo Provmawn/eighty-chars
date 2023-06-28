@@ -1,0 +1,27 @@
+name: cicd
+on: 
+  push:
+    path:
+      - '**.go'
+      - '.github/**.yml'
+  workflow_dispatch:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Golang
+
+      - name: Clone
+        uses: actions/checkout@v3
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Golang
+      - name: Clone
+        uses: actions/checkout@v3
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Golang
+      - name: Clone
+        uses: actions/checkout@v3
